@@ -1,5 +1,6 @@
 const baseUrl = 'http://ec2-3-138-183-128.us-east-2.compute.amazonaws.com:4010/users';
 
+// Función para obtener los usuarios
 export async function getUsers() {
     try {
         const response = await fetch(baseUrl, { method: 'GET' });
@@ -13,6 +14,7 @@ export async function getUsers() {
     }
 }
 
+// Función para crear un usuario
 export async function createUser(user) {
     try {
         const response = await fetch(baseUrl, {

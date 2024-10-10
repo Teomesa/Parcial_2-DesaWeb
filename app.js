@@ -2,26 +2,26 @@ import { getUsers, createUser, updateUser } from './api.js';
 import { renderUsers, fillForm, clearForm } from './dom.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Manejador de eventos para el botón de mostrar/ocultar usuarios
     const toggleButton = document.getElementById('toggle-users');
     const usersContainer = document.getElementById('users');
 
-    toggleButton.addEventListener('click', async () => {
-        const usersVisible = usersContainer.style.display === 'block';
-
-        if (!usersVisible) {
-            try {
-                const users = await getUsers();
-                renderUsers(users, (user) => {
-                    fillForm(user);
-                });
-                usersContainer.style.display = 'grid';
-            } catch (error) {
-                console.error('Error al cargar los usuarios:', error);
-            }
+    toggleButton.addEventListener('click', () => {
+        if (usersContainer.style.display === 'none') {
+            usersContainer.style.display = 'grid'; // Mostrar usuarios
+            toggleButton.innerText = 'Ocultar Usuarios'; // Cambiar texto del botón
         } else {
-            usersContainer.style.display = 'none';
+            usersContainer.style.display = 'none'; // Ocultar usuarios
+            toggleButton.innerText = 'Mostrar Usuarios'; // Cambiar texto del botón
         }
     });
+
+    // Cargar usuarios al inicio
+    await loadUsers();
+
+    // Manejador de eventos para el botón de actualizar usuarios
+    const refreshButton = document.getElementById('refresh-users');
+    refreshButton.addEventListener('click', loadUsers);
 
     document.getElementById('form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -42,13 +42,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             reader.onloadend = async () => {
                 user.photo = reader.result; // Asignar la imagen leída al objeto usuario
                 await submitUser(userId, user); // Llamar a la función para guardar el usuario
-                renderUserCard(user); // Agregar usuario a la lista
             };
             reader.readAsDataURL(file); // Leer el archivo como URL de datos
         } else {
             user.photo = ''; // No se seleccionó imagen
             await submitUser(userId, user);
-            renderUserCard(user); // Agregar usuario a la lista
         }
 
         clearForm();
@@ -66,31 +64,31 @@ async function submitUser(userId, user) {
         await updateUser(userId, user);
         alert('Usuario actualizado con éxito');
     } else {
-        await createUser(user);
+        const createdUser = await createUser(user);
         alert('Usuario creado con éxito');
+        // Renderizar el usuario creado al final de la lista
+        const usersContainer = document.getElementById('users');
+        renderUsers([createdUser], () => fillForm(createdUser), usersContainer);
     }
 }
 
-// Función para renderizar una tarjeta de usuario
-function renderUserCard(user) {
-    const usersContainer = document.getElementById('users');
-    const userElement = document.createElement('div');
-    userElement.classList.add('user-item');
+// Función para cargar usuarios
+async function loadUsers() {
+    try {
+        const users = await getUsers();
+        const usersContainer = document.getElementById('users');
+        usersContainer.innerHTML = ''; 
+        renderUsers(users, (user) => {
+            fillForm(user);
+            scrollToForm(); 
+        }, usersContainer);
+    } catch (error) {
+        console.error('Error al cargar los usuarios:', error);
+    }
+}
 
-    const userImage = document.createElement('img');
-    userImage.src = user.photo || 'default_photo.png'; // URL de la foto por defecto
-    userImage.alt = `${user.firstName} ${user.lastName}`;
-    userImage.classList.add('user-photo');
-
-    const userInfo = document.createElement('div');
-    userInfo.innerHTML = `
-        <h3>${user.firstName} ${user.lastName}</h3>
-        <p><strong>Título de trabajo:</strong> ${user.jobTitle}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Teléfono:</strong> ${user.phone}</p>
-    `;
-
-    userElement.appendChild(userImage);
-    userElement.appendChild(userInfo);
-    usersContainer.appendChild(userElement);
+// Función para desplazar la vista al formulario
+function scrollToForm() {
+    const formSection = document.getElementById('user-form-section');
+    formSection.scrollIntoView({ behavior: 'smooth' }); 
 }

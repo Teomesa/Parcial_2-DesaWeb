@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap');
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -9,7 +10,15 @@ header {
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+h1, h2 {
+    margin: 0;
+    font-family: 'Great Vibes', cursive; 
+    font-size: 2.5rem;
+    color: #28a745; 
 }
 
 main {
@@ -19,8 +28,9 @@ main {
     padding: 20px;
 }
 
-h1, h2 {
-    margin: 0 0 15px;
+h2 {
+    margin: 20px 0;
+    color: #333;
 }
 
 /* Form Styles */
@@ -31,7 +41,8 @@ h1, h2 {
     width: 90%;
     max-width: 500px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .form-group {
@@ -43,12 +54,19 @@ h1, h2 {
 label {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #555;
 }
 
 input[type="text"], input[type="email"] {
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="email"]:focus {
+    border-color: #28a745;
+    outline: none;
 }
 
 button {
@@ -58,6 +76,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -67,44 +86,47 @@ button:hover {
 /* User List Styles */
 #user-list-section {
     width: 90%;
-    max-width: 800px;
+    min-width: none;
 }
 
 .users-container {
-    display: grid; /* Usando grid para las tarjetas */
-    grid-template-columns: repeat(4, 1fr); /* 4 tarjetas por fila */
-    gap: 20px; /* Espacio entre tarjetas */
-    margin-top: 20px; /* Añadido margen superior */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 0.5cm; 
+    margin-top: 20px; 
 }
 
 .user-item {
     display: flex;
-    flex-direction: column; /* Apilar contenido verticalmente */
+    flex-direction: column; 
     align-items: center;
-    background-color: #e2e2e2;
+    background: linear-gradient(to bottom, #28a745 0%, #d1e7dd 50%, #6c757d 100%); 
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 8px; 
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
 .user-item:hover {
-    background-color: #d1d1d1;
+    background: linear-gradient(to bottom, #218838 0%, #b5e6bc 50%, #5a6268 100%); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
 }
 
 .user-photo {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin-bottom: 10px; /* Espacio debajo de la foto */
+    margin-bottom: 10px; 
     object-fit: cover;
 }
 
 .user-item h3 {
     margin: 0;
     font-size: 18px;
-    text-align: center; /* Centrar el texto del nombre */
+    text-align: center; 
+    color: #333;
 }
 
 .user-item p {
@@ -112,14 +134,26 @@ button:hover {
     font-size: 14px;
 }
 
-/* Footer Styles */
 footer {
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
     margin: 0;
     position: relative;
     width: 100%;
     bottom: 0;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: #28a745; 
+    text-decoration: none; 
+}
+
+footer a:hover {
+    text-decoration: underline; 
 }
