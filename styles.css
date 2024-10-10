@@ -74,6 +74,8 @@ button:hover {
 .users-container {
     display: flex;
     flex-direction: column;
+    margin-bottom: 60px;
+
     gap: 10px;
 }
 
@@ -116,7 +118,8 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
+    margin: 0;
+    position: relative;
     width: 100%;
     bottom: 0;
 }

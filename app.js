@@ -1,10 +1,10 @@
 import { getUsers, createUser, updateUser } from './api.js';
 import { renderUsers, fillForm, clearForm } from './dom.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    await loadUsers();
+document.addEventListener('DOMContentLoaded', () => {
+    loadUsers();
 
-    document.getElementById('form').addEventListener('submit', async (event) => {
+    document.getElementById('form').addEventListener('submit', (event) => {
         event.preventDefault();
         const userId = document.getElementById('user-id').value;
         const user = {
@@ -21,28 +21,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (userId) {
-            await updateUser(userId, user);
+            updateUser(userId, user);
             alert('Usuario actualizado con éxito');
         } else {
-            await createUser(user);
+            createUser(user);
             alert('Usuario creado con éxito');
         }
 
         clearForm();
-        await loadUsers();
+        loadUsers();
     });
 });
 
 // Función para cargar la lista de usuarios
-async function loadUsers() {
-    try {
-        const users = await getUsers();
-        renderUsers(users, (user) => {
-            fillForm(user);
-        });
-    } catch (error) {
-        console.error('Error cargando usuarios', error);
-    }
+function loadUsers() {
+    const users = getUsers();
+    renderUsers(users, (user) => {
+        fillForm(user);
+    });
 }
 
 // Función para validar los campos del formulario
