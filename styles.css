@@ -71,15 +71,15 @@ button:hover {
 }
 
 .users-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 60px;
-
-    gap: 10px;
+    display: grid; /* Usando grid para las tarjetas */
+    grid-template-columns: repeat(4, 1fr); /* 4 tarjetas por fila */
+    gap: 20px; /* Espacio entre tarjetas */
+    margin-top: 20px; /* Añadido margen superior */
 }
 
 .user-item {
     display: flex;
+    flex-direction: column; /* Apilar contenido verticalmente */
     align-items: center;
     background-color: #e2e2e2;
     padding: 15px;
@@ -97,13 +97,14 @@ button:hover {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin-right: 20px;
+    margin-bottom: 10px; /* Espacio debajo de la foto */
     object-fit: cover;
 }
 
 .user-item h3 {
     margin: 0;
     font-size: 18px;
+    text-align: center; /* Centrar el texto del nombre */
 }
 
 .user-item p {
